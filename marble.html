@@ -5,40 +5,71 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="reset.css" />
-    <link rel="stylesheet" href="page.css" />
+    <link rel="stylesheet" href="/reset.css" />
+    <link rel="stylesheet" href="/page.css" />
+    <link rel="stylesheet" href="/page.js" />
   </head>
   <body>
     <div id="root">
       <div class="container">
         <header id="header">
-          <div>주사위 굴리고말 움직이기</div>
+          <div>주사위 굴리고 말 움직이기</div>
         </header>
-        <main>
+        <main id="marble">
           <div class="contents">
             <div class="board">
-              <div>시작</div>
-              <div>1</div>
-              <div>2</div>
-              <div>3</div>
-              <div>4</div>
-              <div>5</div>
-              <div>6</div>
-              <div>7</div>
-              <div>8</div>
-              <div>9</div>
-              <div>10</div>
-              <div>11</div>
-              <div>12</div>
-              <div>13</div>
-              <div>14</div>
+              <div class="line1">
+                <div><img id="horse" src="/images/knight.png" alt="" /></div>
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>5</div>
+                <div>6</div>
+                <div>7</div>
+              </div>
+              <div class="line2">
+                <div>8</div>
+                <div>9</div>
+                <div>10</div>
+                <div>11</div>
+              </div>
+              <div class="line3">
+                <div>12</div>
+                <div>13</div>
+                <div>14</div>
+                <div>15</div>
+                <div>16</div>
+                <div>17</div>
+                <div>18</div>
+                <div>19</div>
+              </div>
+              <div class="line4">
+                <div>20</div>
+                <div>21</div>
+                <div>22</div>
+                <div>23</div>
+              </div>
             </div>
             <div class="dice">
-              <button>주사위 굴리기</button>
+              <div><img id="dicepic" src="/images/d1.png" alt="" /></div>
+              <button type="button" class="shuffle">주사위 굴리기</button>
             </div>
           </div>
         </main>
       </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    ;
+    <script>
+      $(".shuffle").on("click", function () {
+        var res = Math.floor(Math.random() * 6) + 1;
+        $("#dicepic").attr("src", "/images/d" + res + ".png");
+        $("#horse").remove();
+        res = res + res;
+        console.log($("#horse").parent());
+        $("#horse").parent().add("img", "src", "/images/knight.png");
+      });
+    </script>
   </body>
 </html>
