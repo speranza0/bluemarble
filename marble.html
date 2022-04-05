@@ -65,10 +65,10 @@
       $(".shuffle").on("click", function () {
         var res = Math.floor(Math.random() * 6) + 1;
         $("#dicepic").attr("src", "/images/d" + res + ".png");
-        $("#horse").remove();
-        res = res + res;
-        console.log($("#horse").parent());
-        $("#horse").parent().add("img", "src", "/images/knight.png");
+        $("#horse").hide();
+        $(".board > div")
+          .eq(res - 1)
+          .html("<img id='horse' src='/images/knight.png'>");
       });
     </script>
   </body>

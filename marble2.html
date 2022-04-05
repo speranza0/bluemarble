@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/reset.css" />
+    <link rel="stylesheet" href="/page2.css" />
+    <link rel="stylesheet" href="/page.js" />
+  </head>
+  <body>
+    <div id="root">
+      <div class="container">
+        <header id="header">
+          <div>주사위로 말 달리기</div>
+        </header>
+        <main id="marble">
+          <div class="contents">
+            <table id="board">
+              <tr class="line1">
+                <td>
+                  <span id="pos1"
+                    ><img id="horse" src="/images/knight.png" alt=""
+                  /></span>
+                </td>
+                <td><span id="pos2"></span></td>
+                <td><span id="pos3"></span></td>
+                <td><span id="pos4"></span></td>
+                <td><span id="pos5"></span></td>
+                <td><span id="pos6"></span></td>
+                <td><span id="pos7"></span></td>
+                <td><span id="pos8"></span></td>
+              </tr>
+              <tr class="line2">
+                <td><span id="pos24"></span></td>
+                <td class="content-box" colspan="6">
+                  <p id="round">지금 몇바퀴 돌고 있을까? : 0바퀴</p>
+                  <p id="announce"></p>
+                </td>
+                <td><span id="pos9"></span></td>
+              </tr>
+              <tr class="line3">
+                <td><span id="pos23"></span></td>
+                <td class="content-box" colspan="6" rowspan="3">
+                  <div><img id="dicepic" src="/images/d1.png" alt="" /></div>
+                  <button type="button" class="shuffle">주사위 굴려굴려</button>
+                </td>
+                <td><span id="pos10"></span></td>
+              </tr>
+              <tr class="line4">
+                <td><span id="pos22"></span></td>
+                <td><span id="pos11"></span></td>
+              </tr>
+              <tr class="line5">
+                <td><span id="pos21"></span></td>
+                <td><span id="pos12"></span></td>
+              </tr>
+              <tr class="line6">
+                <td><span id="pos20"></span></td>
+                <td><span id="pos19"></span></td>
+                <td><span id="pos18"></span></td>
+                <td><span id="pos17"></span></td>
+                <td><span id="pos16"></span></td>
+                <td><span id="pos15"></span></td>
+                <td><span id="pos14"></span></td>
+                <td><span id="pos13"></span></td>
+              </tr>
+            </table>
+          </div>
+        </main>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+      // 말판 css
+      $("span").parent().css("border", "1px solid black");
+
+      // 함정 위치 무작위
+      var resetNum = $("span").parent().length;
+      var resetArray = [];
+
+      while (resetArray.length < 2) {
+        var random = Math.floor(Math.random() * resetNum - 1) + 1;
+        if (random > 1 && resetArray.indexOf(random) === -1) {
+          resetArray.push(random);
+        }
+      }
+      for (var i = 0; i < resetArray.length; i++) {
+        $("span").parent().eq(resetArray[i]).addClass("reset");
+        $(".reset").css("background-color", "red");
+      }
+
+      // 변수 선언
+      var nowNum = 1;
+      var roundNum = 0;
+
+      // 이벤트 동작
+      $(".shuffle").on("click", function () {
+        var res = Math.floor(Math.random() * 6) + 1; // 주사위 1~6
+        nowNum = nowNum + res;
+
+        $("#dicepic").attr("src", "/images/d" + res + ".png");
+        $("#announce").html("주사위만큼 " + "말을 " + res + "칸 이동합니다.");
+
+        if (nowNum >= 25) {
+          roundNum = roundNum + 1;
+          $("#round").html("지금 몇바퀴 돌고 있을까? : " + roundNum + "바퀴");
+          nowNum = nowNum - 24;
+        }
+        if (
+          $("#pos" + nowNum)
+            .parent()
+            .hasClass("reset") === true
+        ) {
+          nowNum = 1;
+          $("#pos" + nowNum).html("<img id='horse' src='/images/knight.png'>");
+          alert("함정에 빠지셨군요. 시작으로 돌아갑니다.");
+        }
+        for (var i = 0; i < 25; i++) {
+          $("#pos" + i).html("");
+        }
+        $("#pos" + nowNum).html("<img id='horse' src='/images/knight.png'>");
+      });
+    </script>
+  </body>
+</html>
