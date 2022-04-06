@@ -37,6 +37,7 @@
                 <td class="content-box" colspan="6">
                   <p id="round">지금 몇바퀴 돌고 있을까? : 0바퀴</p>
                   <p id="announce"></p>
+                  <p id="alert"></p>
                 </td>
                 <td><span id="pos9"></span></td>
               </tr>
@@ -74,13 +75,15 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script>
       // 말판 css
-      $("span").parent().css("border", "1px solid black");
+      $("span").parent().css("border", "2px solid black");
+      $("#pos1").parent().css("background-color", "blue");
 
       // 함정 위치 무작위
       var resetNum = $("span").parent().length;
       var resetArray = [];
+      var resetcount = 2;
 
-      while (resetArray.length < 2) {
+      while (resetArray.length < resetcount) {
         var random = Math.floor(Math.random() * resetNum - 1) + 1;
         if (random > 1 && resetArray.indexOf(random) === -1) {
           resetArray.push(random);
@@ -100,27 +103,61 @@
         var res = Math.floor(Math.random() * 6) + 1; // 주사위 1~6
         nowNum = nowNum + res;
 
-        $("#dicepic").attr("src", "/images/d" + res + ".png");
-        $("#announce").html("주사위만큼 " + "말을 " + res + "칸 이동합니다.");
+        // 주사위 이미지 전환
+        function change() {
+          var count = 0;
+          var image = $("#dicepic");
+          var frames = [
+            "d1.png",
+            "d2.png",
+            "d3.png",
+            "d4.png",
+            "d5.png",
+            "d6.png",
+          ];
+          setInterval(function () {
+            $(image).attr("src", "/images/" + frames[count]);
+            count = count + 1;
+            console.log(count);
+          }, 100);
+        }
+        change();
+
+        //주사위 눈 표시 및 말 이동 이벤트 딜레이
+        setTimeout(function () {
+          $("#dicepic").attr("src", "/images/d" + res + ".png");
+          $("#announce").html("주사위만큼 " + "말을 " + res + "칸 이동합니다.");
+          for (var i = 0; i < 25; i++) {
+            $("#pos" + i).html("");
+          }
+          $("#pos" + nowNum).html("<img id='horse' src='/images/knight.png'>");
+        }, 3000);
+
+        // $("#dicepic").attr("src", "/images/d" + res + ".png");
+        // $("#announce").html("주사위만큼 " + "말을 " + res + "칸 이동합니다.");
+        // for (var i = 0; i < 25; i++) {
+        //   $("#pos" + i).html("");
+        // }
+        // $("#pos" + nowNum).html("<img id='horse' src='/images/knight.png'>");
 
         if (nowNum >= 25) {
           roundNum = roundNum + 1;
           $("#round").html("지금 몇바퀴 돌고 있을까? : " + roundNum + "바퀴");
           nowNum = nowNum - 24;
         }
+
         if (
           $("#pos" + nowNum)
             .parent()
             .hasClass("reset") === true
         ) {
+          $("#alert").html("함정에 걸리셨네요. 시작 위치로 돌아갑니다.");
           nowNum = 1;
+          for (var i = 0; i < 25; i++) {
+            $("#pos" + i).html("");
+          }
           $("#pos" + nowNum).html("<img id='horse' src='/images/knight.png'>");
-          alert("함정에 빠지셨군요. 시작으로 돌아갑니다.");
         }
-        for (var i = 0; i < 25; i++) {
-          $("#pos" + i).html("");
-        }
-        $("#pos" + nowNum).html("<img id='horse' src='/images/knight.png'>");
       });
     </script>
   </body>
