@@ -5,71 +5,82 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="/reset.css" />
-    <link rel="stylesheet" href="/page.css" />
-    <link rel="stylesheet" href="/page.js" />
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/page.css" />
   </head>
   <body>
     <div id="root">
       <div class="container">
         <header id="header">
-          <div>주사위 굴리고 말 움직이기</div>
+          <div>주사위로 말 달리기</div>
         </header>
         <main id="marble">
           <div class="contents">
-            <div class="board">
-              <div class="line1">
-                <div><img id="horse" src="/images/knight.png" alt="" /></div>
-                <div>1</div>
-                <div>2</div>
-                <div>3</div>
-                <div>4</div>
-                <div>5</div>
-                <div>6</div>
-                <div>7</div>
-              </div>
-              <div class="line2">
-                <div>8</div>
-                <div>9</div>
-                <div>10</div>
-                <div>11</div>
-              </div>
-              <div class="line3">
-                <div>12</div>
-                <div>13</div>
-                <div>14</div>
-                <div>15</div>
-                <div>16</div>
-                <div>17</div>
-                <div>18</div>
-                <div>19</div>
-              </div>
-              <div class="line4">
-                <div>20</div>
-                <div>21</div>
-                <div>22</div>
-                <div>23</div>
-              </div>
-            </div>
-            <div class="dice">
-              <div><img id="dicepic" src="/images/d1.png" alt="" /></div>
-              <button type="button" class="shuffle">주사위 굴리기</button>
+            <table id="board">
+              <tr class="line1">
+                <td>
+                  <span id="pos1"
+                    ><img id="horse" src="/images/knight.png" alt=""
+                  /></span>
+                </td>
+                <td><span id="pos2"></span></td>
+                <td><span id="pos3"></span></td>
+                <td><span id="pos4"></span></td>
+                <td><span id="pos5"></span></td>
+                <td><span id="pos6"></span></td>
+                <td><span id="pos7"></span></td>
+                <td><span id="pos8"></span></td>
+              </tr>
+              <tr class="line2">
+                <td><span id="pos24"></span></td>
+                <td class="content-box" colspan="6">
+                  <p id="round"></p>
+                  <p id="announce"></p>
+                  <p id="alert"></p>
+                </td>
+                <td><span id="pos9"></span></td>
+              </tr>
+              <tr class="line3">
+                <td><span id="pos23"></span></td>
+                <td class="content-box" colspan="6" rowspan="3">
+                  <div><img id="dicepic" src="/images/d1.png" alt="" /></div>
+                  <button type="button" class="shuffle">굴려굴려 주사위</button>
+                </td>
+                <td><span id="pos10"></span></td>
+              </tr>
+              <tr class="line4">
+                <td><span id="pos22"></span></td>
+                <td><span id="pos11"></span></td>
+              </tr>
+              <tr class="line5">
+                <td><span id="pos21"></span></td>
+                <td><span id="pos12"></span></td>
+              </tr>
+              <tr class="line6">
+                <td><span id="pos20"></span></td>
+                <td><span id="pos19"></span></td>
+                <td><span id="pos18"></span></td>
+                <td><span id="pos17"></span></td>
+                <td><span id="pos16"></span></td>
+                <td><span id="pos15"></span></td>
+                <td><span id="pos14"></span></td>
+                <td><span id="pos13"></span></td>
+              </tr>
+            </table>
+            <div id="rule">
+              <p>규칙 설명</p>
+              <p>1. 주사위를 굴리면 그 숫자만큼 말이 이동한다.</p>
+              <p>2. 빨간색 칸에 들어가면 시작위치로 돌아간다.</p>
+              <p>
+                3. 초록색 칸에 들어가면 1~3까지의 보너스 숫자만큼 추가 이동한다.
+              </p>
+              <p>4. 3바퀴를 돌면 승리한다.</p>
             </div>
           </div>
         </main>
       </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    ;
-    <script>
-      $(".shuffle").on("click", function () {
-        var res = Math.floor(Math.random() * 6) + 1;
-        $("#dicepic").attr("src", "/images/d" + res + ".png");
-        $("#horse").hide();
-        $(".board > div")
-          .eq(res - 1)
-          .html("<img id='horse' src='/images/knight.png'>");
-      });
-    </script>
+    <script src="/js/page.js"></script>
   </body>
 </html>
